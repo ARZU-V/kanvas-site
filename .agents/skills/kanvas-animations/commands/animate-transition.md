@@ -41,12 +41,12 @@ Section recession, depth choreography, and scroll-based visual transitions for K
 const heroRecession = document.querySelector('.hero-recession');
 if (heroRecession) {
   gsap.to(heroRecession, {
-    opacity: 0,
-    y: -60,
+    scale: 0.92,
+    y: -40,
     scrollTrigger: {
       trigger: heroRecession,
-      start: 'bottom 80%',
-      end:   'bottom 10%',
+      start: 'bottom 30%',
+      end:   'bottom top',
       scrub: 1,
     },
   });
