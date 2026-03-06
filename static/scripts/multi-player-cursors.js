@@ -344,6 +344,7 @@
 
   function initCursors(container, cursorIndices = [0, 1]) {
     if (!container) return;
+    // Keep init idempotent in case this function is called more than once for the same container.
     if (runtimeStateByContainer.has(container)) return;
 
     const cursors = [];
@@ -379,7 +380,8 @@
       updateSocialProofActivity(socialProofState, 'Live collaboration is active');
     }
 
-    let containerInView = !('IntersectionObserver' in window);
+    const hasIntersectionObserver = 'IntersectionObserver' in window;
+    let containerInView = hasIntersectionObserver ? false : true;
     runtimeState.updateLoopState = () => {
       const containerIsMounted = document.body.contains(container);
       if (!containerIsMounted) {
@@ -401,7 +403,7 @@
       }
     };
 
-    if ('IntersectionObserver' in window) {
+    if (hasIntersectionObserver) {
       runtimeState.intersectionObserver = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
           if (entry.target !== container) return;
