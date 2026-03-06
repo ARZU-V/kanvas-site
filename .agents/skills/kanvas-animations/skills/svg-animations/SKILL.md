@@ -50,7 +50,13 @@ ScrollTrigger.create({
     trigger: '.path-svg',
     start: 'top 80%',
     once: true,
-    onEnter: () => document.querySelector('.path-draw').classList.add('is-drawn'),
+    onEnter: (self) => {
+        const paths = self && self.trigger
+            ? self.trigger.querySelectorAll('.path-draw')
+            : null;
+        if (!paths || paths.length === 0) return;
+        paths.forEach((path) => path.classList.add('is-drawn'));
+    },
 });
 ```
 
